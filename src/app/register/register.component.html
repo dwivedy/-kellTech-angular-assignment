@@ -1,0 +1,63 @@
+<div>
+  <h2>Register</h2>
+ <!-- Form starts -->
+<form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
+  <label>
+    First Name:
+    <input type="text" formControlName="firstName" (keydown.space)="$event.preventDefault();" required>
+  </label>
+ <!-- error block -->
+ <div  *ngIf=" isSubmitted && firstName.errors?.required">
+  <sup>*</sup> First Name is required.
+</div>
+
+<div  *ngIf=" isSubmitted && firstName.errors?.minlength">
+  <sup>*</sup> First Name must be at least 6 characters long.
+</div>
+
+  <label>
+    Last Name:
+    <input type="text" formControlName="lastName"  (keydown.space)="$event.preventDefault();" required>
+  </label>
+
+
+   <!-- error block -->
+ <div   *ngIf="isSubmitted && lastName.errors?.required">
+  <sup>*</sup>Last Name is required.
+</div>
+
+<div   *ngIf=" isSubmitted && lastName.errors?.minlength">
+  <sup>*</sup> Last Name must be at least 6 characters long.
+</div>
+  <label>
+    Phone Number:
+    <input type="text" formControlName="phoneNumber" (keydown.space)="$event.preventDefault();" required>
+  </label>
+
+   <!-- error block -->
+ <div  *ngIf="isSubmitted && phoneNumber.errors?.required">
+  <sup>*</sup>Phone Number is required.
+</div>
+
+<div   *ngIf="isSubmitted && phoneNumber.errors?.pattern">
+  <sup>*</sup>Phone Number is not correct.
+</div>
+
+  <select  formControlName="countryName" required>
+    <option value="" disabled>Choose your country</option>
+    <option *ngFor="let country of Country" [ngValue]="country"  (change)="changeCountry($event)">{{country}}</option>
+ </select>
+
+ <!-- error block -->
+ <div *ngIf="isSubmitted && countryName.errors?.required">
+  <sup>*</sup>Country is required.
+</div>
+ <!-- <button type="submit" [disabled]="!registrationForm.valid">Submit</button> -->
+ <button type="submit">Submit</button>
+</form><!-- Form ends -->
+  </div>
+
+
+  <div *ngIf=isSuccessRegistration >
+   <b> Your account has been created.</b>
+  </div>
